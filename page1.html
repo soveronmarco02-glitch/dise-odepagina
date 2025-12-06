@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍸 Mixología Express - Venta de Tragos a Domicilio</title>
+
+<a href="index.html" class="boton-menu">Volver al Menú Principal</a>
+
+<style>
+/* Estilo CSS para que parezca un botón */
+.boton-menu {
+    text-decoration: none; /* Quita el subrayado */
+    color: #FFFFFF; /* Color de texto blanco */
+    background-color: #FF5733; /* Fondo naranja/coral */
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block; /* Para que aplique padding correctamente */
+    transition: background-color 0.3s;
+}
+
+.boton-menu:hover {
+    background-color: #CC4529; /* Oscurece al pasar el ratón */
+}
+</style>
+
+
+
+
+    <style>
+        :root {
+            --color-principal: #1f1f1f; /* Negro Oscuro */
+            --color-acento: #FF5733; /* Naranja/Coral Vibrante */
+            --color-texto-claro: #f4f4f4;
+            --color-tarjeta: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* === MEJORA: IMAGEN DE FONDO AÑADIDA === */
+            background-color: var(--color-principal);
+            background-image: url('https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/tragos.webp'); /* <-- RUTA DE TU IMAGEN DE FONDO */
+            background-size: cover;
+            background-attachment: fixed; 
+            color: var(--color-texto-claro);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Capa de oscurecimiento (Overlay) para mejorar la legibilidad */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75); /* Oscurece el 75% la imagen de fondo */
+            z-index: -1;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.85); /* Fondo semitransparente para el header */
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 4px solid var(--color-acento);
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: var(--color-texto-claro);
+            letter-spacing: 2px;
+            /* MEJORA: text-shadow añadido como pediste */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+        }
+
+        header p {
+            color: var(--color-acento);
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        main {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative; 
+            z-index: 5;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--color-acento);
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--color-acento);
+            padding-bottom: 10px;
+        }
+
+        /* --- Grid de Productos (Flexbox para mejor compatibilidad) --- */
+        .grid-tragos {
+            display: flex; /* MEJORA: Uso de Flexbox en lugar de Grid puro para simplicidad */
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .trago-card {
+            background-color: rgba(51, 51, 51, 0.9); 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            width: 300px; /* Tamaño fijo para que entren 3 o 4 por fila */
+        }
+
+        .trago-card:hover {
+            transform: translateY(-8px); /* MEJORA: Efecto más pronunciado */
+            box-shadow: 0 10px 25px rgba(255, 87, 51, 0.6); /* Sombra más brillante al pasar el ratón */
+        }
+
+        .trago-card h3 {
+            color: var(--color-texto-claro);
+            font-size: 1.5em;
+            margin-top: 0;
+        }
+
+        .trago-card p {
+            font-size: 0.9em;
+            color: #ccc;
+            height: 60px; 
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .trago-card img {
+            width: 100%;
+            height: 200px;
+            background-color: var(--color-acento); 
+            border-radius: 8px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            border: 2px solid var(--color-texto-claro);
+        }
+
+        .precio {
+            font-size: 1.8em;
+            color: #FFD700; /* Dorado para destacar el precio */
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .boton-comprar {
+            display: block;
+            background-color: var(--color-acento);
+            color: var(--color-principal);
+            padding: 12px 0; /* MEJORA: Un poco más de padding */
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .boton-comprar:hover {
+            background-color: #FF8369; 
+        }
+
+        /* --- Pie de Página --- */
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+            border-top: 2px solid var(--color-acento);
+            position: relative;
+            z-index: 5;
+        }
+
+        footer a {
+            color: var(--color-acento);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mixología Express</h1>
+        <p>Tu Barra de Tragos Premium a Domicilio 🚀</p>
+    </header>
+
+    <main>
+        <h2>Nuestros Clásicos</h2>
+
+        <section class="grid-tragos">
+            
+            <div class="trago-card">
+                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/mojito.webp" alt="Mojito Clásico">
+                <h3>Mojito Clásico</h3>
+                <p>Ron blanco, azúcar, lima, menta fresca y soda. La combinación perfecta de frescura y sabor caribeño.</p>
+                <div class="precio">$2500</div>
+                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Mojito%20Clásico." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
+            </div>
+
+            <div class="trago-card">
+                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/margarita%20frozem.webp" alt="Margarita Frozen">
+                <h3>Margarita Frozen</h3>
+                <p>Tequila, Cointreau y jugo de limón fresco, servido bien frío con borde de sal. Pura explosión cítrica.</p>
+                <div class="precio">$2700</div>
+                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20una%20Margarita%20Frozen." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
+            </div>
+
+            <div class="trago-card">
+                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/gin.webp" alt="Gin Tónic Botánico">
+                <h3>Gin Tónic Botánico</h3>
+                <p>Gin premium infusionado con bayas de enebro y rodajas de pepino, finalizado con tónica. Elegante y refrescante.</p>
+                <div class="precio">$3200</div>
+                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Gin%20Tónic%20Botánico." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
+            </div>
+
+            <div class="trago-card">
+                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/old.webp" alt="Old Fashioned">
+                <h3>Old Fashioned</h3>
+                <p>Whisky bourbon, azúcar, Angostura bitters y un twist de naranja. El rey de los cócteles clásicos.</p>
+                <div class="precio">$3500</div>
+                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Old%20Fashioned." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
+            </div>
+            
+        </section>
+
+        <h2 style="margin-top: 50px;">Especiales de la Casa</h2>
+
+        <section class="grid-tragos">
+
+            <div class="trago-card">
+                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/caipi.webp" alt="Caipiriña">
+                <h3>Caipiriña</h3>
+                <p>El trago más popular de Brasil. Cachaça, azúcar y lima machacada. Sabor potente y refrescante.</p>
+                <div class="precio">$2600</div>
+                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20una%20Caipiriña." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
+            </div>
+
+            <div class="trago-card">
+                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/aperol.webp" alt="Aperol Spritz">
+                <h3>Aperol Spritz</h3>
+                <p>Aperol, Prosecco y un toque de soda, servido con una rodaja de naranja. El aperitivo italiano perfecto.</p>
+                <div class="precio">$2900</div>
+                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Aperol%20Spritz." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
+            </div>
+
+            <div class="trago-card">
+                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/cosmo.webp" alt="Cosmopolitan">
+                <h3>Cosmopolitan</h3>
+                <p>Vodka, Cointreau, jugo de arándanos y lima. Elegante, moderno y con un color rosa intenso.</p>
+                <div class="precio">$2850</div>
+                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Cosmopolitan." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
+            </div>
+
+            <div class="trago-card">
+                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/negroni.webp" alt="Negroni">
+                <h3>Negroni</h3>
+                <p>Gin, Campari y Vermut rojo a partes iguales. Amargo, complejo e inolvidable. Solo para paladares intensos.</p>
+                <div class="precio">$3300</div>
+                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Negroni." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>Pedidos al WhatsApp: <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Me%20interesan%20sus%20tragos." target="_blank">11 3591-1475</a></p>
+        <p>se puede agregar una calculadora para sumar los pedidos , que el cliente pueda elgir si es en efectico o transferencia</p>
+        <p>&copy; 2025 Mixología Express. Prohibida la venta a menores de 18 años.</p>
+    </footer>
+
+</body>
+</html>
