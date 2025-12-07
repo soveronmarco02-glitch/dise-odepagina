@@ -3,50 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍸 Mixología Express - Venta de Tragos a Domicilio</title>
-
-<a href="index.html" class="boton-menu">Volver al Menú Principal</a>
-
-<style>
-/* Estilo CSS para que parezca un botón */
-.boton-menu {
-    text-decoration: none; /* Quita el subrayado */
-    color: #FFFFFF; /* Color de texto blanco */
-    background-color: #FF5733; /* Fondo naranja/coral */
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    display: inline-block; /* Para que aplique padding correctamente */
-    transition: background-color 0.3s;
-}
-
-.boton-menu:hover {
-    background-color: #CC4529; /* Oscurece al pasar el ratón */
-}
-</style>
-
-
-
-
+    <title>🍸 Mixología Express - Menú y Pedido a Domicilio</title>
+    <!-- Carga de Tailwind CSS para estilos modernos y responsivos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <!-- Iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
+        /* Personalización de colores y fuentes */
         :root {
             --color-principal: #1f1f1f; /* Negro Oscuro */
             --color-acento: #FF5733; /* Naranja/Coral Vibrante */
             --color-texto-claro: #f4f4f4;
             --color-tarjeta: #333333;
+            --color-fondo-overlay: rgba(0, 0, 0, 0.75);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            /* === MEJORA: IMAGEN DE FONDO AÑADIDA === */
+            font-family: 'Inter', sans-serif;
             background-color: var(--color-principal);
-            background-image: url('https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/tragos.webp'); /* <-- RUTA DE TU IMAGEN DE FONDO */
+            background-image: url('https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/tragos.webp');
             background-size: cover;
-            background-attachment: fixed; 
+            background-attachment: fixed;
+            background-position: center;
             color: var(--color-texto-claro);
-            line-height: 1.6;
+            min-height: 100vh;
             position: relative;
         }
 
@@ -58,230 +40,236 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.75); /* Oscurece el 75% la imagen de fondo */
+            background-color: var(--color-fondo-overlay);
             z-index: -1;
         }
 
-        header {
-            background-color: rgba(0, 0, 0, 0.85); /* Fondo semitransparente para el header */
-            padding: 20px 0;
-            text-align: center;
-            border-bottom: 4px solid var(--color-acento);
-            position: relative;
-            z-index: 10;
+        /* Estilo para la barra de navegación fija en móvil */
+        #resumen-fijo {
+            z-index: 50;
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: var(--color-texto-claro);
-            letter-spacing: 2px;
-            /* MEJORA: text-shadow añadido como pediste */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
-        }
-
-        header p {
-            color: var(--color-acento);
-            font-size: 1.1em;
-            margin-top: 5px;
-        }
-
-        main {
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative; 
-            z-index: 5;
-        }
-
-        h2 {
-            text-align: center;
-            color: var(--color-acento);
-            font-size: 2em;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--color-acento);
-            padding-bottom: 10px;
-        }
-
-        /* --- Grid de Productos (Flexbox para mejor compatibilidad) --- */
-        .grid-tragos {
-            display: flex; /* MEJORA: Uso de Flexbox en lugar de Grid puro para simplicidad */
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-        }
-
+        /* Estilo personalizado para las tarjetas de producto */
         .trago-card {
-            background-color: rgba(51, 51, 51, 0.9); 
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            background-color: rgba(51, 51, 51, 0.95);
             transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
-            width: 300px; /* Tamaño fijo para que entren 3 o 4 por fila */
+            border: 1px solid rgba(255, 87, 51, 0.3);
+            border-radius: 0.75rem;
+            overflow: hidden;
         }
 
         .trago-card:hover {
-            transform: translateY(-8px); /* MEJORA: Efecto más pronunciado */
-            box-shadow: 0 10px 25px rgba(255, 87, 51, 0.6); /* Sombra más brillante al pasar el ratón */
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 87, 51, 0.5);
         }
 
-        .trago-card h3 {
-            color: var(--color-texto-claro);
-            font-size: 1.5em;
-            margin-top: 0;
-        }
-
-        .trago-card p {
-            font-size: 0.9em;
-            color: #ccc;
-            height: 60px; 
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-        
-        .trago-card img {
-            width: 100%;
-            height: 200px;
-            background-color: var(--color-acento); 
-            border-radius: 8px;
-            margin-bottom: 15px;
-            object-fit: cover;
-            border: 2px solid var(--color-texto-claro);
-        }
-
-        .precio {
-            font-size: 1.8em;
-            color: #FFD700; /* Dorado para destacar el precio */
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .boton-comprar {
-            display: block;
-            background-color: var(--color-acento);
-            color: var(--color-principal);
-            padding: 12px 0; /* MEJORA: Un poco más de padding */
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 15px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            text-transform: uppercase;
-        }
-
-        .boton-comprar:hover {
-            background-color: #FF8369; 
-        }
-
-        /* --- Pie de Página --- */
-        footer {
-            background-color: rgba(0, 0, 0, 0.9);
+        .input-cantidad {
+            width: 3rem; 
+            padding: 0.25rem;
             text-align: center;
-            padding: 20px 0;
-            font-size: 0.9em;
-            border-top: 2px solid var(--color-acento);
-            position: relative;
-            z-index: 5;
-        }
-
-        footer a {
-            color: var(--color-acento);
-            text-decoration: none;
-            margin: 0 10px;
+            background-color: #1f1f1f;
+            border: 1px solid #FF5733;
+            color: white;
+            border-radius: 0.25rem;
         }
     </style>
 </head>
-<body>
+<body class="pb-28 sm:pb-8">
 
-    <header>
-        <h1>Mixología Express</h1>
-        <p>Tu Barra de Tragos Premium a Domicilio 🚀</p>
+    <!-- Botón Volver al Menú Principal (Flotante) -->
+    <a href="index.html" class="absolute top-4 left-4 z-20 text-white bg-[var(--color-acento)] hover:bg-[#CC4529] font-bold py-2 px-4 rounded-lg transition duration-300 shadow-lg">
+        <i class="fas fa-chevron-left mr-2"></i>Menú Principal
+    </a>
+
+    <header class="bg-black/90 p-6 text-center border-b-4 border-[var(--color-acento)] mb-8">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-wider" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Mixología Express</h1>
+        <p class="text-[var(--color-acento)] text-lg mt-1 font-medium">Tu Barra de Tragos Premium a Domicilio 🚀</p>
     </header>
 
-    <main>
-        <h2>Nuestros Clásicos</h2>
+    <main class="max-w-7xl mx-auto p-4 sm:p-6">
+        <h2 class="text-3xl font-bold text-center text-[var(--color-acento)] mb-8 pb-3 border-b-2 border-[var(--color-acento)]">Selecciona tu Pedido</h2>
 
-        <section class="grid-tragos">
-            
-            <div class="trago-card">
-                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/mojito.webp" alt="Mojito Clásico">
-                <h3>Mojito Clásico</h3>
-                <p>Ron blanco, azúcar, lima, menta fresca y soda. La combinación perfecta de frescura y sabor caribeño.</p>
-                <div class="precio">$2500</div>
-                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Mojito%20Clásico." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
-            </div>
-
-            <div class="trago-card">
-                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/margarita%20frozem.webp" alt="Margarita Frozen">
-                <h3>Margarita Frozen</h3>
-                <p>Tequila, Cointreau y jugo de limón fresco, servido bien frío con borde de sal. Pura explosión cítrica.</p>
-                <div class="precio">$2700</div>
-                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20una%20Margarita%20Frozen." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
-            </div>
-
-            <div class="trago-card">
-                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/gin.webp" alt="Gin Tónic Botánico">
-                <h3>Gin Tónic Botánico</h3>
-                <p>Gin premium infusionado con bayas de enebro y rodajas de pepino, finalizado con tónica. Elegante y refrescante.</p>
-                <div class="precio">$3200</div>
-                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Gin%20Tónic%20Botánico." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
-            </div>
-
-            <div class="trago-card">
-                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/old.webp" alt="Old Fashioned">
-                <h3>Old Fashioned</h3>
-                <p>Whisky bourbon, azúcar, Angostura bitters y un twist de naranja. El rey de los cócteles clásicos.</p>
-                <div class="precio">$3500</div>
-                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Old%20Fashioned." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
-            </div>
-            
-        </section>
-
-        <h2 style="margin-top: 50px;">Especiales de la Casa</h2>
-
-        <section class="grid-tragos">
-
-            <div class="trago-card">
-                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/caipi.webp" alt="Caipiriña">
-                <h3>Caipiriña</h3>
-                <p>El trago más popular de Brasil. Cachaça, azúcar y lima machacada. Sabor potente y refrescante.</p>
-                <div class="precio">$2600</div>
-                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20una%20Caipiriña." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
-            </div>
-
-            <div class="trago-card">
-                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/aperol.webp" alt="Aperol Spritz">
-                <h3>Aperol Spritz</h3>
-                <p>Aperol, Prosecco y un toque de soda, servido con una rodaja de naranja. El aperitivo italiano perfecto.</p>
-                <div class="precio">$2900</div>
-                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Aperol%20Spritz." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
-            </div>
-
-            <div class="trago-card">
-                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/cosmo.webp" alt="Cosmopolitan">
-                <h3>Cosmopolitan</h3>
-                <p>Vodka, Cointreau, jugo de arándanos y lima. Elegante, moderno y con un color rosa intenso.</p>
-                <div class="precio">$2850</div>
-                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Cosmopolitan." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
-            </div>
-
-            <div class="trago-card">
-                <img src="https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/negroni.webp" alt="Negroni">
-                <h3>Negroni</h3>
-                <p>Gin, Campari y Vermut rojo a partes iguales. Amargo, complejo e inolvidable. Solo para paladares intensos.</p>
-                <div class="precio">$3300</div>
-                <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Quiero%20pedir%20un%20Negroni." target="_blank" class="boton-comprar">¡Pedir Ahora!</a>
-            </div>
-
+        <!-- GRID DE PRODUCTOS -->
+        <section id="productos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Las tarjetas de producto se inyectarán aquí mediante JavaScript -->
         </section>
     </main>
 
+    <!-- RESUMEN Y CALCULADORA (Barra fija para móviles) -->
+    <div id="resumen-fijo" class="fixed bottom-0 left-0 right-0 bg-black/95 p-4 shadow-2xl shadow-black border-t-4 border-[var(--color-acento)]">
+        <h3 class="text-xl font-bold text-white mb-2 text-center">Resumen del Pedido</h3>
+        
+        <div class="flex flex-col sm:flex-row justify-between items-center max-w-lg mx-auto gap-4">
+            
+            <!-- OPCIONES DE PAGO -->
+            <div class="flex space-x-4">
+                <label class="flex items-center text-white cursor-pointer">
+                    <input type="radio" name="pago" value="efectivo" checked onclick="calcularTotal()" class="form-radio text-[var(--color-acento)] h-4 w-4">
+                    <span class="ml-2 font-semibold">Efectivo (-5% Desc.)</span>
+                </label>
+                <label class="flex items-center text-white cursor-pointer">
+                    <input type="radio" name="pago" value="transferencia" onclick="calcularTotal()" class="form-radio text-[var(--color-acento)] h-4 w-4">
+                    <span class="ml-2 font-semibold">Transferencia</span>
+                </label>
+            </div>
+            
+            <!-- TOTAL FINAL -->
+            <div class="text-center sm:text-right">
+                <p class="text-gray-300 text-sm">Total a Pagar:</p>
+                <p id="total-final" class="text-3xl font-extrabold text-yellow-400">$0</p>
+            </div>
+        </div>
+
+        <button onclick="generarPedidoWhatsApp()" class="mt-4 w-full bg-[#25D366] text-white font-bold py-3 rounded-lg hover:bg-[#1DA851] transition duration-300 shadow-lg flex items-center justify-center">
+             <i class="fab fa-whatsapp text-xl mr-3"></i> Confirmar Pedido por WhatsApp
+        </button>
+    </div>
+
     <footer>
-        <p>Pedidos al WhatsApp: <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Me%20interesan%20sus%20tragos." target="_blank">11 3591-1475</a></p>
-        <p>se puede agregar una calculadora para sumar los pedidos , que el cliente pueda elgir si es en efectivo o transferencia</p>
-        <p>&copy; 2025 Mixología Express. Prohibida la venta a menores de 18 años.</p>
+        <p class="text-center text-gray-500 py-4 mt-10">
+            Pedidos al WhatsApp: <a href="https://api.whatsapp.com/send?phone=5491135911475&text=Hola!%20Me%20interesan%20sus%20tragos." target="_blank" class="text-[var(--color-acento)] hover:text-white">11 3591-1475</a><br>
+            &copy; 2025 Mixología Express. Prohibida la venta a menores de 18 años.
+        </p>
     </footer>
 
+    <script>
+        // Datos de los productos (usando la misma información que proporcionaste)
+        const productos = [
+            { id: 'mojito', nombre: 'Mojito Clásico', precio: 2500, img: 'https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/mojito.webp', descripcion: 'Ron blanco, azúcar, lima, menta fresca y soda. La combinación perfecta de frescura y sabor caribeño.' },
+            { id: 'margarita', nombre: 'Margarita Frozen', precio: 2700, img: 'https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/margarita%20frozem.webp', descripcion: 'Tequila, Cointreau y jugo de limón fresco, servido bien frío con borde de sal. Pura explosión cítrica.' },
+            { id: 'gin', nombre: 'Gin Tónic Botánico', precio: 3200, img: 'https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/gin.webp', descripcion: 'Gin premium infusionado con bayas de enebro y rodajas de pepino, finalizado con tónica. Elegante y refrescante.' },
+            { id: 'old_fashioned', nombre: 'Old Fashioned', precio: 3500, img: 'https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/old.webp', descripcion: 'Whisky bourbon, azúcar, Angostura bitters y un twist de naranja. El rey de los cócteles clásicos.' },
+            { id: 'caipirinha', nombre: 'Caipiriña', precio: 2600, img: 'https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/caipi.webp', descripcion: 'El trago más popular de Brasil. Cachaça, azúcar y lima machacada. Sabor potente y refrescante.' },
+            { id: 'aperol', nombre: 'Aperol Spritz', precio: 2900, img: 'https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/aperol.webp', descripcion: 'Aperol, Prosecco y un toque de soda, servido con una rodaja de naranja. El aperitivo italiano perfecto.' },
+            { id: 'cosmo', nombre: 'Cosmopolitan', precio: 2850, img: 'https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/cosmo.webp', descripcion: 'Vodka, Cointreau, jugo de arándanos y lima. Elegante, moderno y con un color rosa intenso.' },
+            { id: 'negroni', nombre: 'Negroni', precio: 3300, img: 'https://uploads.onecompiler.io/43vjzagjf/446ssf7pw/negroni.webp', descripcion: 'Gin, Campari y Vermut rojo a partes iguales. Amargo, complejo e inolvidable. Solo para paladares intensos.' },
+        ];
+
+        // Carrito de compras: almacena { id: cantidad, ... }
+        let carrito = {};
+
+        // Función para renderizar las tarjetas de productos
+        function renderizarProductos() {
+            const grid = document.getElementById('productos-grid');
+            grid.innerHTML = productos.map(p => `
+                <div class="trago-card flex flex-col justify-between">
+                    <div>
+                        <img src="${p.img}" alt="${p.nombre}" class="w-full h-48 object-cover rounded-md mb-4 border-2 border-white/50" onerror="this.onerror=null;this.src='https://placehold.co/400x200/FF5733/FFFFFF?text=Trago+No+Disponible'">
+                        <div class="px-4">
+                            <h3 class="text-2xl font-bold text-white mb-1">${p.nombre}</h3>
+                            <p class="text-sm text-gray-400 h-12 overflow-hidden mb-3">${p.descripcion}</p>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xl font-bold text-yellow-400">$${p.precio.toLocaleString('es-AR')}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controles de Cantidad y Subtotal -->
+                    <div class="p-4 pt-0">
+                        <div class="flex items-center justify-between mb-2">
+                            <label for="qty-${p.id}" class="text-sm font-semibold text-gray-300">Cantidad:</label>
+                            <input type="number" id="qty-${p.id}" data-id="${p.id}" min="0" value="0" 
+                                class="input-cantidad" 
+                                onchange="actualizarCarrito(this.dataset.id, parseInt(this.value))">
+                        </div>
+                        <p class="text-right text-sm font-medium">Subtotal: <span id="subtotal-${p.id}" class="text-[var(--color-acento)]">$0</span></p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Función para actualizar el carrito y recalcular totales
+        function actualizarCarrito(id, cantidad) {
+            cantidad = Math.max(0, isNaN(cantidad) ? 0 : cantidad); // Asegura que la cantidad no sea negativa
+            carrito[id] = cantidad;
+
+            // Actualizar Subtotal en la tarjeta
+            const producto = productos.find(p => p.id === id);
+            const subtotalElement = document.getElementById(`subtotal-${id}`);
+            if (producto && subtotalElement) {
+                const subtotal = producto.precio * cantidad;
+                subtotalElement.textContent = `$${subtotal.toLocaleString('es-AR')}`;
+            }
+
+            calcularTotal();
+        }
+
+        // Función para calcular y mostrar el total final
+        function calcularTotal() {
+            let subtotalGlobal = 0;
+            const pagoEfectivo = document.querySelector('input[name="pago"]:checked').value === 'efectivo';
+            
+            // 1. Calcular el subtotal global
+            for (const id in carrito) {
+                const cantidad = carrito[id];
+                if (cantidad > 0) {
+                    const producto = productos.find(p => p.id === id);
+                    if (producto) {
+                        subtotalGlobal += producto.precio * cantidad;
+                    }
+                }
+            }
+
+            let totalPagar = subtotalGlobal;
+            
+            // 2. Aplicar descuento si es efectivo
+            if (pagoEfectivo) {
+                totalPagar *= 0.95; // Aplica 5% de descuento
+            }
+
+            // 3. Mostrar el total
+            document.getElementById('total-final').textContent = `$${Math.round(totalPagar).toLocaleString('es-AR')}`;
+        }
+
+        // Función para generar el mensaje de pedido de WhatsApp
+        function generarPedidoWhatsApp() {
+            let mensaje = "¡Hola! Mi pedido de Mixología Express es:\n\n";
+            let tienePedido = false;
+            let subtotal = 0;
+
+            const pagoSeleccionado = document.querySelector('input[name="pago"]:checked').value;
+            const descuento = pagoSeleccionado === 'efectivo' ? 0.05 : 0;
+            
+            // 1. Listar productos
+            productos.forEach(p => {
+                const cantidad = carrito[p.id] || 0;
+                if (cantidad > 0) {
+                    mensaje += `* ${cantidad}x ${p.nombre} ($${(p.precio * cantidad).toLocaleString('es-AR')})\n`;
+                    subtotal += p.precio * cantidad;
+                    tienePedido = true;
+                }
+            });
+
+            if (!tienePedido) {
+                alert("Por favor, selecciona al menos un trago para realizar el pedido.");
+                return;
+            }
+
+            // 2. Resumen final
+            mensaje += "\n--- RESUMEN ---\n";
+            mensaje += `Subtotal: $${subtotal.toLocaleString('es-AR')}\n`;
+            
+            if (descuento > 0) {
+                const ahorro = subtotal * descuento;
+                mensaje += `Descuento (Efectivo 5%): -$${Math.round(ahorro).toLocaleString('es-AR')}\n`;
+            }
+            
+            const totalFinal = subtotal * (1 - descuento);
+            mensaje += `Método de Pago: ${pagoSeleccionado.toUpperCase()}\n`;
+            mensaje += `*TOTAL FINAL: $${Math.round(totalFinal).toLocaleString('es-AR')}*\n\n`;
+            mensaje += "Por favor, confírmame el total y el tiempo de envío. ¡Gracias!";
+
+            // 3. Abrir WhatsApp
+            const numero = '5491135911475'; 
+            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        // Inicialización
+        window.onload = function() {
+            renderizarProductos();
+            calcularTotal();
+        }
+    </script>
 </body>
 </html>
